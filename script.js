@@ -11,3 +11,7 @@ function createGameboard() {
   }
   return { gameboard };
 }
+
+function createPlayer(name, marker) {
+  return { name, marker };
+}
