@@ -102,7 +102,10 @@ function createGameplay(
         gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
       (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
         gameBoard.gameBoard[1][1] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`)
+        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.gameBoard[0][1] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[1][1] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][1] === `${getActivePlayer().marker}`)
     ) {
       return gameOverWinner(getActivePlayer());
       //Below else if statement checks if there are any remaining undefined squares,
