@@ -6,7 +6,7 @@ function createGameBoard() {
   for (let i = 0; i < rows; i++) {
     gameBoard[i] = [];
     for (let j = 0; j < columns; j++) {
-      gameBoard[i].push(undefined);
+      gameBoard[i].push('0');
     }
   }
 
@@ -50,6 +50,12 @@ function createGameplay(
     console.log(`${getActivePlayer().name}'s turn.`);
   };
 
+  const gameOver = (winningPlayer) => {
+    console.log(gameBoard.gameBoard);
+    console.log('Congratulations!');
+    console.log(`${winningPlayer.name} is the winner!`);
+  };
+
   const playRound = (row, column) => {
     console.log(
       `Marking square at row(${row}) and 
@@ -59,17 +65,35 @@ function createGameplay(
     );
     gameBoard.addMarker(row, column, getActivePlayer().marker);
 
+    if (
+      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[0][1] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[0][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.gameBoard[2][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][1] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[1][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][0] === `${getActivePlayer().marker}`) ||
+      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[1][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][0] === `${getActivePlayer().marker}`) ||
+      (gameBoard.gameBoard[0][2] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[1][2] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[1][1] === `${getActivePlayer().marker}` &&
+        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`)
+    ) {
+      return gameOver(getActivePlayer());
+    }
     switchPlayerTurn();
     printNewRound();
   };
 
   printNewRound();
 
-  return { playRound };
-  // gameOver: function (winningPlayer) {
-  //   console.log('Congratulations!');
-  //   console.log(winningPlayer.name + ' is the winner!');
-  // },
+  return { playRound, getActivePlayer };
   // printName: function (player) {
   //   console.log(player.name);
   // },
