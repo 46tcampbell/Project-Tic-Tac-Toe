@@ -1,15 +1,20 @@
-function createGameboard() {
+function createGameBoard() {
   const rows = 3;
   const columns = 3;
-  const gameboard = [];
+  const gameBoard = [];
 
   for (let i = 0; i < rows; i++) {
-    gameboard[i] = [];
+    gameBoard[i] = [];
     for (let j = 0; j < columns; j++) {
-      gameboard[i].push([]);
+      gameBoard[i].push([]);
     }
   }
-  return { gameboard };
+
+  const addMarker = (row, column, marker) => {
+    gameBoard[row][column] = marker;
+  };
+
+  return { gameBoard, addMarker };
 }
 
 function createPlayer(name, marker) {
