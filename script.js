@@ -64,6 +64,18 @@ function createGameplay(
   };
 
   const playRound = (row, column) => {
+    //Below if statement checks if there is already a marker in the
+    //chosen spot before officially kicking off the round.
+    if (
+      gameBoard.gameBoard[row][column] === 'X' ||
+      gameBoard.gameBoard[row][column] === 'O'
+    ) {
+      console.log(
+        'Invalid move. There is already a marker there. Try again ya big Silly Sally'
+      );
+      return printNewRound();
+    }
+    //Below is the actual start of a normal round.
     console.log(
       `Marking square at row(${row}) and 
       column(${column}) with ${getActivePlayer().name}'s Marker(${
