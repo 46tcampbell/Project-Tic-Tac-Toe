@@ -68,7 +68,13 @@ function createGameplay(
 
   const gameOverDraw = (winningPlayer) => {
     console.log(gameBoard.getBoard());
-    console.log('Draw!');
+    const drawH1 = document.createElement('h1');
+    drawH1.textContent = 'Draw!';
+    dialog.appendChild(drawH1);
+    const drawH2 = document.createElement('h2');
+    drawH2.textContent = `Nobody wins. Play Again?`;
+    dialog.appendChild(drawH2);
+    dialog.showModal();
   };
 
   const playRound = (row, column) => {
