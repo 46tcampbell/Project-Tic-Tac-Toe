@@ -63,6 +63,13 @@ function createGameplay(
     const winningH2 = document.createElement('h2');
     winningH2.textContent = `${winningPlayer.name} is the winner!`;
     dialog.appendChild(winningH2);
+    const winningBtn = document.createElement('button');
+    winningBtn.textContent = 'Start New Game';
+    winningBtn.addEventListener('click', () => {
+      dialog.close();
+      window.location.reload();
+    });
+    dialog.appendChild(winningBtn);
     dialog.showModal();
   };
 
@@ -74,6 +81,13 @@ function createGameplay(
     const drawH2 = document.createElement('h2');
     drawH2.textContent = `Nobody wins. Play Again?`;
     dialog.appendChild(drawH2);
+    const drawBtn = document.createElement('button');
+    drawBtn.textContent = 'Start New Game';
+    drawBtn.addEventListener('click', () => {
+      dialog.close();
+      window.location.reload();
+    });
+    dialog.appendChild(drawBtn);
     dialog.showModal();
   };
 
