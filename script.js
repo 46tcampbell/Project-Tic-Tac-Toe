@@ -13,13 +13,15 @@ function createGameBoard() {
       gameBoard[i].push(undefined);
     }
   }
+
+  const getBoard = () => gameBoard;
   //Below function adds an 'X' or 'O' to gameBoard
   const addMarker = (row, column, marker) => {
     gameBoard[row][column] = marker;
   };
   //Below returns an object when function is executed that gives access to
   //gameBoard and addMarker function
-  return { gameBoard, addMarker };
+  return { getBoard, addMarker };
 }
 
 //Below function controls the gameplay
@@ -48,18 +50,18 @@ function createGameplay(
   const getActivePlayer = () => activePlayer;
 
   const printNewRound = () => {
-    console.log(gameBoard.gameBoard);
+    console.log(gameBoard.getBoard());
     console.log(`${getActivePlayer().name}'s turn.`);
   };
 
   const gameOverWinner = (winningPlayer) => {
-    console.log(gameBoard.gameBoard);
+    console.log(gameBoard.getBoard());
     console.log('Congratulations!');
     console.log(`${winningPlayer.name} is the winner!`);
   };
 
   const gameOverDraw = (winningPlayer) => {
-    console.log(gameBoard.gameBoard);
+    console.log(gameBoard.getBoard());
     console.log('Draw!');
   };
 
@@ -67,10 +69,10 @@ function createGameplay(
     //Below if statement checks if there is already a marker in the
     //chosen spot before officially kicking off the round.
     if (
-      gameBoard.gameBoard[row][column] === 'X' ||
-      gameBoard.gameBoard[row][column] === 'O'
+      gameBoard.getBoard()[row][column] === 'X' ||
+      gameBoard.getBoard()[row][column] === 'O'
     ) {
-      console.log(
+      alert(
         'Invalid move. There is already a marker there. Try again ya big Silly Sally'
       );
       return printNewRound();
@@ -85,35 +87,41 @@ function createGameplay(
     gameBoard.addMarker(row, column, getActivePlayer().marker);
     //Below if statement checks if there is a winner after the current player moves.
     if (
-      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[0][1] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[0][2] === `${getActivePlayer().marker}`) ||
-      (gameBoard.gameBoard[2][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][1] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
-      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[1][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][0] === `${getActivePlayer().marker}`) ||
-      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[1][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][0] === `${getActivePlayer().marker}`) ||
-      (gameBoard.gameBoard[0][2] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[1][2] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
-      (gameBoard.gameBoard[0][0] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[1][1] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][2] === `${getActivePlayer().marker}`) ||
-      (gameBoard.gameBoard[0][1] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[1][1] === `${getActivePlayer().marker}` &&
-        gameBoard.gameBoard[2][1] === `${getActivePlayer().marker}`)
+      //Below are the if statements for vertical 3-in-a-rows
+      (gameBoard.getBoard()[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][0] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][0] === `${getActivePlayer().marker}`) ||
+      (gameBoard.getBoard()[0][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][1] === `${getActivePlayer().marker}`) ||
+      (gameBoard.getBoard()[0][2] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][2] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][2] === `${getActivePlayer().marker}`) ||
+      //Below are the if statements for horizontal 3-in-a-rows
+      (gameBoard.getBoard()[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[0][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[0][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.getBoard()[1][0] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.getBoard()[2][0] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][2] === `${getActivePlayer().marker}`) ||
+      //Below are the if statements for diagonal 3-in-a-rows
+      (gameBoard.getBoard()[0][0] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][2] === `${getActivePlayer().marker}`) ||
+      (gameBoard.getBoard()[0][2] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[1][1] === `${getActivePlayer().marker}` &&
+        gameBoard.getBoard()[2][0] === `${getActivePlayer().marker}`)
     ) {
       return gameOverWinner(getActivePlayer());
       //Below else if statement checks if there are any remaining undefined squares,
       //if not, a draw is called.
     } else if (
-      gameBoard.gameBoard[0].includes(undefined) === false &&
-      gameBoard.gameBoard[1].includes(undefined) === false &&
-      gameBoard.gameBoard[2].includes(undefined) === false
+      gameBoard.getBoard()[0].includes(undefined) === false &&
+      gameBoard.getBoard()[1].includes(undefined) === false &&
+      gameBoard.getBoard()[2].includes(undefined) === false
     ) {
       return gameOverDraw();
     }
@@ -123,7 +131,46 @@ function createGameplay(
 
   printNewRound();
 
-  return { playRound, getActivePlayer };
+  return { playRound, getActivePlayer, getBoard: gameBoard.getBoard };
 }
 
-const game = createGameplay();
+function screenController() {
+  const game = createGameplay();
+  const playerTurnDiv = document.querySelector('.turn');
+  const boardDiv = document.querySelector('.board');
+
+  const updateScreen = () => {
+    boardDiv.textContent = '';
+
+    const board = game.getBoard();
+    const activePlayer = game.getActivePlayer();
+
+    playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
+    board.forEach((row, rowIndex) => {
+      row.forEach((column, columnIndex) => {
+        const squareButton = document.createElement('button');
+        squareButton.classList.add('square');
+        squareButton.dataset.row = rowIndex;
+        squareButton.dataset.column = columnIndex;
+        squareButton.textContent = column;
+        boardDiv.appendChild(squareButton);
+      });
+    });
+  };
+
+  function clickHandlerBoard(e) {
+    const selectedRow = e.target.dataset.row;
+    const selectedColumn = e.target.dataset.column;
+    game.playRound(selectedRow, selectedColumn);
+    updateScreen();
+  }
+  boardDiv.addEventListener('click', clickHandlerBoard);
+
+  // Initial render
+  updateScreen();
+
+  // We don't need to return anything from this module because everything is encapsulated inside this screen controller.
+}
+
+screenController();
