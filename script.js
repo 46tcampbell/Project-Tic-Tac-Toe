@@ -64,7 +64,7 @@ function createGameplay(
     winningH2.textContent = `${winningPlayer.name} is the winner!`;
     dialog.appendChild(winningH2);
     const winningBtn = document.createElement('button');
-    winningBtn.textContent = 'Start New Game';
+    winningBtn.textContent = 'Reset Gameboard';
     winningBtn.addEventListener('click', () => {
       dialog.close();
       window.location.reload();
@@ -82,7 +82,7 @@ function createGameplay(
     drawH2.textContent = `Nobody wins. Play Again?`;
     dialog.appendChild(drawH2);
     const drawBtn = document.createElement('button');
-    drawBtn.textContent = 'Start New Game';
+    drawBtn.textContent = 'Reset Gameboard';
     drawBtn.addEventListener('click', () => {
       dialog.close();
       window.location.reload();
@@ -160,8 +160,8 @@ function createGameplay(
   return { playRound, getActivePlayer, getBoard: gameBoard.getBoard };
 }
 
-function screenController() {
-  const game = createGameplay();
+function screenController(playerOneName, playerTwoName) {
+  const game = createGameplay(playerOneName, playerTwoName);
   const playerTurnDiv = document.querySelector('.turn');
   const boardDiv = document.querySelector('.board');
 
@@ -196,7 +196,37 @@ function screenController() {
   // Initial render
   updateScreen();
 
+  // return { updateScreen };
+
   // We don't need to return anything from this module because everything is encapsulated inside this screen controller.
 }
 
-screenController();
+const startBtn = document.querySelector('.startBtn');
+startBtn.addEventListener('click', () => {
+  if (startBtn.textContent === 'Reset Gameboard') {
+    return window.location.reload();
+  }
+  let playerOneName;
+  let playerTwoName;
+  do {
+    playerOneName = prompt('Please enter Player One Name', 'Player One');
+    if (playerOneName === null) {
+      alert('You cancelled the prompt. Please provide a name to continue.');
+    } else if (playerOneName.trim() === '') {
+      alert('Name cannot be empty. Please enter your name.');
+    }
+  } while (playerOneName === null || playerOneName.trim() === '');
+  do {
+    playerTwoName = prompt('Please enter Player Two Name', 'Player Two');
+    if (playerTwoName === null) {
+      alert('You cancelled the prompt. Please provide a name to continue.');
+    } else if (playerTwoName.trim() === '') {
+      alert('Name cannot be empty. Please enter your name.');
+    }
+  } while (playerTwoName === null || playerTwoName.trim() === '');
+
+  screenController(playerOneName, playerTwoName);
+  startBtn.textContent = 'Reset Gameboard';
+});
+
+// screenController();
