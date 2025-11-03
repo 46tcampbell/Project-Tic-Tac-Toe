@@ -167,11 +167,13 @@ function screenController(playerOneName, playerTwoName) {
 
   const updateScreen = () => {
     boardDiv.textContent = '';
+    boardDiv.style.backgroundColor = 'black';
 
     const board = game.getBoard();
     const activePlayer = game.getActivePlayer();
 
     playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+    playerTurnDiv.style.backgroundColor = '#f7b003';
 
     board.forEach((row, rowIndex) => {
       row.forEach((column, columnIndex) => {
