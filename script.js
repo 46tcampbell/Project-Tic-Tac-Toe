@@ -30,6 +30,7 @@ function createGameplay(
   playerTwoName = 'Player Two'
 ) {
   const gameBoard = createGameBoard();
+  const dialog = document.querySelector('dialog');
   const players = [
     {
       name: playerOneName,
@@ -56,8 +57,13 @@ function createGameplay(
 
   const gameOverWinner = (winningPlayer) => {
     console.log(gameBoard.getBoard());
-    console.log('Congratulations!');
-    console.log(`${winningPlayer.name} is the winner!`);
+    const winningH1 = document.createElement('h1');
+    winningH1.textContent = 'Congratulations!';
+    dialog.appendChild(winningH1);
+    const winningH2 = document.createElement('h2');
+    winningH2.textContent = `${winningPlayer.name} is the winner!`;
+    dialog.appendChild(winningH2);
+    dialog.showModal();
   };
 
   const gameOverDraw = (winningPlayer) => {
