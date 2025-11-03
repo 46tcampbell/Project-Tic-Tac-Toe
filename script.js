@@ -1,6 +1,6 @@
 //Below function creates the actual gameboard to play on
 
-function createGameBoard() {
+const gameBoard = (function () {
   const rows = 3;
   const columns = 3;
   const gameBoard = [];
@@ -22,14 +22,14 @@ function createGameBoard() {
   //Below returns an object when function is executed that gives access to
   //gameBoard and addMarker function
   return { getBoard, addMarker };
-}
+})();
 
 //Below function controls the gameplay
 function createGameplay(
   playerOneName = 'Player One',
   playerTwoName = 'Player Two'
 ) {
-  const gameBoard = createGameBoard();
+  // const gameBoard = gameBoard.getBoard();
   const dialog = document.querySelector('dialog');
   const players = [
     {
